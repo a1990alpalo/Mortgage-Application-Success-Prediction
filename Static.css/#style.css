@@ -1,0 +1,68 @@
+/* Style for the body background */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #C0C0C0, #FFFFFF); /* Silver to white gradient */
+    background-image: url('{{ url_for("static", filename="images/house-icon.png") }}');
+    background-repeat: repeat; /* Repeat the house icon */
+    background-size: 50px 50px; /* Adjust size of house icons */
+    color: #333;
+}
+
+/* Style for the main header */
+h1 {
+    color: #ffffff;
+    background-color: #4A90E2;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Style the form */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Center align form labels and inputs */
+label, input, select {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+input[type="text"], select {
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Style for the submit button */
+button {
+    padding: 10px 20px;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #357ABD;
+}
