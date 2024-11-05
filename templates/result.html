@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Application Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .result-container {
+            text-align: center;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .status {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #28a745; /* Green for accepted */
+        }
+        .status.rejected {
+            color: #dc3545; /* Red for rejected */
+        }
+        .probability {
+            font-size: 18px;
+            color: #555;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Mortgage Application Result</h1>
+        <p class="status {{ 'rejected' if prediction == 'denied' else '' }}">
+            Your mortgage application has been <strong>{{ prediction }}</strong>.
+        </p>
+        <p class="probability">Probability of Approval: {{ probability }}</p>
+        <a href="/" class="back-link">Back to Home</a>
+    </div>
+</body>
+</html>
