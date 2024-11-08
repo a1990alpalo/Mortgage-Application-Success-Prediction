@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Loan Prediction App</title>
+ 
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="confetti" href="https://cdn.skypack.dev/bootstrap@next/dist/css/bootstrap.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script type="module">
+        import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+        confetti({particleCount: 150, spread: 160, drift: 0, startVelocity: 60,
+            origin: {
+                        x: 0.438,
+                        y: 0.3
+                }});
+    </script> 
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(#1a9fff,#FFFFFF);
+            padding: 15px;
+            text-align: center;
+            margin-top: 17%;
+        }
+
+        .login {
+            max-width: 650px;
+            margin: auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.9);
+            padding: 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .result-text {
+            font-size: 20px;
+            margin-bottom: 20px;
+            
+        }
+        .probability {
+            font-size: 25px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login">
+        <div class="logo">Home Loan Approval Prediction</div>
+        <div class="result-text">Awesome! The prediction model indicates that you will most likely get approved. &#128176;</div>
+        <div class="probability">{{ prediction_text }}</div>
+        <button class="button" onclick="window.location.href='/';">Predict Again</button>
+    </div>
+
+</body>
+</html>

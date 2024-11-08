@@ -1,94 +1,127 @@
-from flask import Flask, request, render_template
-import pickle
-import numpy as np
+# import dependencies
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
+import numpy as np
+from flask import Flask, render_template, request
+import pickle
 
+# initialize the flask app
 app = Flask(__name__)
 
-# Load the logistic regression model and scaler
-logistic_model = pickle.load(open('logistic_regression_model.pkl', 'rb'))
-scaler = pickle.load(open('x_scaler.pkl', 'rb'))
+# load logistic regression model, scaler, and imputer
+model = pickle.load(open('logistic_regression.pkl', 'rb'))
+x_scaler = pickle.load(open('x_scaler.pkl', 'rb'))
+imputer = pickle.load(open('imputer.pkl', 'rb'))
 
+# define the app
 @app.route('/')
 def home():
     return render_template('index.html')
 
+# to use the predict button in our web-app
 @app.route('/predict', methods=['POST'])
 def predict():
+    # Input variables with default values if empty
+    applicant_income_input = request.form.get('ApplicantIncome', '').strip()
+    co_applicant_income_input = request.form.get('CoapplicantIncome', '').strip()
+    loan_amount_input = request.form.get('LoanAmount', '').strip()
+    loan_amount_term_input = request.form.get('Loan_Amount_Term', '').strip()
+    credit_history_input = request.form.get('Credit_History', '').strip()
+
+    # Check if any required field is empty
+    if not applicant_income_input or not co_applicant_income_input or not loan_amount_input or not loan_amount_term_input or not credit_history_input:
+        return render_template('index.html', error="Please fill in all required fields with valid values.")
+
+    # Convert input values to float
     try:
-        # Extract and process form data
-        form_data = request.form
-        applicant_income = float(form_data.get('ApplicantIncome', 0))
-        co_applicant_income = float(form_data.get('CoapplicantIncome', 0))
-        loan_amount = float(form_data.get('LoanAmount', 0))
-        loan_amount_term = float(form_data.get('Loan_Amount_Term', 0))
-        credit_history = float(form_data.get('Credit_History', 0))
+        applicant_income_input = float(applicant_income_input)
+        co_applicant_income_input = float(co_applicant_income_input)
+        loan_amount_input = float(loan_amount_input)
+        loan_amount_term_input = float(loan_amount_term_input)
+        credit_history_input = float(credit_history_input)
+    except ValueError:
+        return render_template('index.html', error="Please enter valid numbers for income and loan details.")
 
-        # Encode categorical variables
-        gender = 1 if form_data['Gender'] == "Male" else 0
-        married = 1 if form_data['Married'] == "Y" else 0
-        dependents = form_data['Dependents']
-        dependents_0, dependents_1, dependents_2, dependents_3 = 0, 0, 0, 0
-        if dependents == "0":
-            dependents_0 = 1
-        elif dependents == "1":
-            dependents_1 = 1
-        elif dependents == "2":
-            dependents_2 = 1
-        else:
-            dependents_3 = 1
+    # Process other inputs
+    gender_input = request.form['Gender']
+    gender_male = 1 if gender_input == "Male" else 0
+    gender_female = 1 - gender_male
 
-        education = 1 if form_data['Education'] == "Graduate" else 0
-        self_employed = 1 if form_data['Self_Employed'] == "Yes" else 0
-        property_area = form_data['Property_Area']
-        property_area_rural, property_area_semiurban, property_area_urban = 0, 0, 0
-        if property_area == "Urban":
-            property_area_urban = 1
-        elif property_area == "Semiurban":
-            property_area_semiurban = 1
-        else:
-            property_area_rural = 1
+    married_input = request.form['Married']
+    married_yes = 1 if married_input == "Y" else 0
+    married_no = 1 - married_yes
 
-        # Create DataFrame for prediction
-        input_data = pd.DataFrame({
-            "ApplicantIncome": [applicant_income],
-            "CoapplicantIncome": [co_applicant_income],
-            "LoanAmount": [loan_amount],
-            "Loan_Amount_Term": [loan_amount_term],
-            "Credit_History": [credit_history],
-            "Gender_Male": [gender],
-            "Married_Yes": [married],
-            "Dependents_0": [dependents_0],
-            "Dependents_1": [dependents_1],
-            "Dependents_2": [dependents_2],
-            "Dependents_3+": [dependents_3],
-            "Education_Graduate": [education],
-            "Self_Employed_Yes": [self_employed],
-            "Property_Area_Rural": [property_area_rural],
-            "Property_Area_Semiurban": [property_area_semiurban],
-            "Property_Area_Urban": [property_area_urban]
-        })
+    dependents_input = request.form['Dependents']
+    dependents_0 = 1 if dependents_input == "0" else 0
+    dependents_1 = 1 if dependents_input == "1" else 0
+    dependents_2 = 1 if dependents_input == "2" else 0
+    dependents_3 = 1 if dependents_input == "3+" else 0
 
-        # Scale the input data
-        scaled_data = scaler.transform(input_data)
+    education_input = request.form['Education']
+    education_graduate = 1 if education_input == "Graduate" else 0
+    education_not_graduate = 1 - education_graduate
 
-        # Make prediction with logistic model and get probability
-        prediction_prob = logistic_model.predict_proba(scaled_data)[0][1]
-        prediction_text = "accepted" if prediction_prob > 0.6 else "denied"
-        formatted_probability = "{:.2f}%".format(prediction_prob * 100)
+    self_employed_input = request.form['Self_Employed']
+    self_employed_yes = 1 if self_employed_input == "Yes" else 0
+    self_employed_no = 1 - self_employed_yes
 
-    except Exception as e:
-        # Handle any errors and return an error message
-        return render_template('result.html', prediction="Error", probability="Invalid input")
+    property_area_input = request.form['Property_Area']
+    property_area_urban = 1 if property_area_input == "Urban" else 0
+    property_area_semiurban = 1 if property_area_input == "Semiurban" else 0
+    property_area_rural = 1 - (property_area_urban + property_area_semiurban)
 
-    # Render the result page with conditional approval status
-    return render_template('result.html', 
-                           prediction=prediction_text, 
-                           probability=formatted_probability)
+    # Prepare input data for prediction
+    predictions_df = pd.DataFrame({
+        "ApplicantIncome": [applicant_income_input],
+        "CoapplicantIncome": [co_applicant_income_input],
+        "LoanAmount": [loan_amount_input],
+        "Loan_Amount_Term": [loan_amount_term_input],
+        "Credit_History": [credit_history_input],
+        "Gender_Female": [gender_female],
+        "Gender_Male": [gender_male],
+        "Married_No": [married_no],
+        "Married_Yes": [married_yes],
+        "Dependents_0": [dependents_0],
+        "Dependents_1": [dependents_1],
+        "Dependents_2": [dependents_2],
+        "Dependents_3+": [dependents_3],
+        "Education_Graduate": [education_graduate],
+        "Education_Not Graduate": [education_not_graduate],
+        "Self_Employed_No": [self_employed_no],
+        "Self_Employed_Yes": [self_employed_yes],
+        "Property_Area_Rural": [property_area_rural],
+        "Property_Area_Semiurban": [property_area_semiurban],
+        "Property_Area_Urban": [property_area_urban]
+    })
 
-if __name__ == "__main__":
+    # Debugging: Print the input DataFrame
+    print("Input DataFrame:")
+    print(predictions_df)
+
+    # Apply imputer to handle missing values
+    predictions_df_imputed = imputer.transform(predictions_df)
+
+    # Scale the input data
+    x_test_scaled = x_scaler.transform(predictions_df_imputed)
+
+    # Debugging: Print the scaled input data
+    print("Scaled Input Data:")
+    print(x_test_scaled)
+
+    # Make prediction
+    prediction = model.predict_proba(x_test_scaled)
+    probability_of_approval = prediction[0][1]
+
+    # Debugging: Print the prediction output
+    print("Model Prediction (Probabilities):")
+    print(prediction)
+
+    # Format probability
+    formatted_probability = "{:.2f}%".format(probability_of_approval * 100)
+
+    # Choose the result page based on the probability
+    page = "approve.html" if probability_of_approval > 0.60 else "denied.html"
+    return render_template(page, prediction_text='Probability: {}'.format(formatted_probability))
+
+# start the flask server
+if __name__ == '__main__':
     app.run(debug=True)
-
-
-

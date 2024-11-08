@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Loan Prediction App</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <style>
+
+
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(#A72C27,#FFFFFF);
+            background-image: #ffffff;
+            padding: 30px;
+            text-align: center;
+            margin-top: 17%;
+        }
+        .login {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+            padding: 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .result-text {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .probability {
+            font-size: 25px;
+            font-weight: bold;
+            color: #a72c28;
+        }
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <div class="logo">Mortgage Loan Prediction App</div>
+        <div class="result-text">Sorry, our prediction indicates that you will not get a loan. &#128546;</div>
+        <div class="probability">{{ prediction_text }}</div>
+        <button class="button" onclick="window.location.href='/';">Predict Again</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+
+/* Global styles */
+html, footer, div, img, label, a, h2, h3, h4, h5, p {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    line-height: 1.6;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    font-family: inherit;
+    height: 100%;
+  }
+  
+  /* Form container styles */
+  .form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form label styles */
+  .form-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Form input styles */
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  /* Submit button styles */
+  .btn {
+    background-color: rgba(17, 0, 255, 0.952);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: auto;
+  
+  }
+  
+  /* Additional spacing styles */
+  .mb-5 {
+    margin-bottom: 40px;
+  }
+  
