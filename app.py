@@ -8,7 +8,7 @@ import pickle
 app = Flask(__name__)
 
 # load logistic regression model, scaler, and imputer
-model = pickle.load(open('logistic_regression.pkl', 'rb'))
+model = pickle.load(open('log_regression.pkl', 'rb'))
 x_scaler = pickle.load(open('x_scaler.pkl', 'rb'))
 imputer = pickle.load(open('imputer.pkl', 'rb'))
 
@@ -35,7 +35,7 @@ def predict():
     try:
         applicant_income_input = float(applicant_income_input)
         co_applicant_income_input = float(co_applicant_income_input)
-        loan_amount_input = float(loan_amount_input)
+        loan_amount_input = float(loan_amount_input) / 1000
         loan_amount_term_input = float(loan_amount_term_input)
         credit_history_input = float(credit_history_input)
     except ValueError:
