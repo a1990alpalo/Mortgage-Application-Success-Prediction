@@ -1,6 +1,6 @@
 # Mortgage-Application-Success-Prediction
 
-This project aims to predict the success of mortgage applications using a machine learning model [https://a1990alpalo.github.io/Mortgage-Application-Success-Prediction/]. The project includes a web application built with Flask that allows users to input mortgage application details and receive predictions based on the model. This README file outlines the purpose of the project, the tools and libraries used, and instructions for running the application.
+This project aims to predict the success of mortgage applications using a machine learning model. The project includes a web application built with Flask that allows users to input mortgage application details and receive predictions based on the model. This README file outlines the purpose of the project, the tools and libraries used, and instructions for running the application.
 
 Project Overview
 The Mortgage Application Success Prediction project is designed to assist lenders and applicants by predicting the likelihood of a mortgage application being approved. By analyzing various factors (such as applicant income, credit history, loan amount, etc.), the model helps in evaluating applications efficiently. The project includes both a machine learning model and a web interface.
@@ -48,6 +48,6 @@ Copy code
 python app.py
 Open a web browser and go to http://127.0.0.1:5000 to access the application.
 
-Usage
+Usage [https://a1990alpalo.github.io/Mortgage-Application-Success-Prediction/]
 Enter the required details for the mortgage application in the input fields.
 Submit the form to receive a prediction on whether the mortgage application is likely to succeed.
