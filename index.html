@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>Mortgage Loan Prediction App</title>
+    
+    <link rel="stylesheet" href="/static/css/style.css" />
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background: #fff;
+        }
+
+        .header {
+            background-color: #add8e6; /* Light blue color */
+            padding: 60px;
+            text-align: center;
+            margin-top: -130px;
+            font-size: 50px;
+            height: 380px;
+            margin-bottom: -1%;
+            display: block;
+        }
+
+        #text-pop-up-top h1 {
+            text-align: center;
+            font-size: 55px;
+            font-weight: 600;
+            margin-top: 10%;
+            color: rgb(255, 255, 255);
+        }
+
+        .form-container {
+            max-width: 820px;
+            margin: auto;
+            margin-top: -7%;
+            margin-bottom: 3%;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
+            border-radius: 5px;
+            padding: 3%;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: rgb(16, 15, 15);
+            text-align: left;
+            font-weight: bold;
+            margin-left: 9%;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 40px;
+            padding: 8px;
+            font-size: 17px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            font-weight: bold;
+            color: rgb(16, 15, 15);
+            font-size: 20px;
+            margin-right: 4%;
+            margin-left: 9%;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 13px 20px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 20px;
+            width: 60%;
+            margin: 0 auto;
+            display: block;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header" id="text-pop-up-top">
+        <h1>Mortgage Loan Prediction App</h1>
+    </div>
+
+    <div class="form-container">
+        <form action="{{ url_for('predict')}}" method="post">
+
+            <div class="form-group">
+                <label for="Gender" class="form-label">Select Gender:</label>
+                <select name="Gender" id="Gender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Married" class="form-label">Are you married:</label>
+                <select name="Married" id="Married" class="form-control">
+                    <option value="Y">Yes</option> 
+                    <option value="N">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Dependents" class="form-label">Number of dependents:</label>
+                <select name="Dependents" id="Dependents" class="form-control">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3+">3+</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Education" class="form-label">Level of education:</label>
+                <select name="Education" id="Education" class="form-control">
+                    <option value="Graduate">Graduate</option>
+                    <option value="Not Graduate">Not Graduate</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Self_Employed" class="form-label">Are you self-employed:</label>
+                <select name="Self_Employed" id="Self_Employed" class="form-control">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ApplicantIncome" class="form-label">Applicant income:</label>
+                <input name="ApplicantIncome" type="text" id="ApplicantIncome" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="CoapplicantIncome" class="form-label">Co-applicant income:</label>
+                <input name="CoapplicantIncome" type="float" id="CoapplicantIncome" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="LoanAmount" class="form-label">Loan amount (in thousands):</label>
+                <input name="LoanAmount" type="text" id="LoanAmount" class="form-control" placeholder="e.g., enter 300 for 300,000">
+            </div>
+
+            <div class="form-group">
+                <label for="Loan_Amount_Term" class="form-label">Loan term:</label>
+                <select name="Loan_Amount_Term" id="Loan_Amount_Term" class="form-control">
+                    <option value="12">1 year</option>
+                    <option value="36">3 years</option>
+                    <option value="60">5 years</option>
+                    <option value="84">7 years</option>
+                    <option value="120">10 years</option>
+                    <option value="180">15 years</option>
+                    <option value="240">20 years</option>
+                    <option value="300">25 years</option>
+                    <option value="360">30 years</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Credit_History" class="form-label">Years of credit history:</label>
+                <select name="Credit_History" id="Credit_History" class="form-control">
+                    <option value="0">Bad</option>
+                    <option value="1">Good</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Property_Area" class="form-label">Select property area:</label>
+                <select name="Property_Area" id="Property_Area" class="form-control">
+                    <option value="Urban">Urban</option>
+                    <option value="Semiurban">Semi-Urban</option>
+                    <option value="Rural">Rural</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">Predict</button>
+        </form>
+    </div>
+</body>
+</html>
